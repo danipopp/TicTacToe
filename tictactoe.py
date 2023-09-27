@@ -3,6 +3,7 @@ Tic Tac Toe Player
 """
 
 import math
+import copy
 
 X = "X"
 O = "O"
@@ -29,9 +30,9 @@ def player(board):
     # loop through every loop
     for i in range(0,3):
         for j in range(0,3):
-            if board(i,j) == X:
+            if board[i][j] == X:
                 count_x += 1
-            elif board(i,j) == O:
+            elif board[i][j] == O:
                 count_o += 1
     # 
     if count_x > count_o:
@@ -50,7 +51,7 @@ def actions(board):
     # check where are empty spaces
     for i in range(0,3):
         for j in range(0,3):
-            if board(i,j) == EMPTY:
+            if board[i][j] == EMPTY:
                 available.add((i,j))
 
     return available
@@ -61,11 +62,11 @@ def result(board, action):
     Returns the board that results from making move (i, j) on the board.
     """
     # check if the move is possible
-    if action not in actions(board):
-        raise ValueError
+    #if action not in actions(board):
+    #    raise ValueError
     # Copy because of the minimax function
-    result = board.deepcopy()
-    result[action[0],action[1]] = player(board)
+    result = copy.deepcopy(board)
+    result[action[0]][action[1]] = player(board)
 
     return result
 
@@ -133,9 +134,11 @@ def minimax(board):
         return ((1,1))
     
     if player(board) == X:
-        
-
-    raise NotImplementedError
+        value,move = maxValue(board)
+        return move
+    else:
+        value,move = minValue(board)
+        return move
 
 
 def maxValue(board):
@@ -148,9 +151,9 @@ def maxValue(board):
         v,a = minValue(result(board,action))
         if val < v:
             val = v
-            move = a
+            move = action
             if val == 1:
-                return move
+                return val,move
     return val,move
 
 
@@ -161,10 +164,10 @@ def minValue(board):
     val = float('inf')
     move = None
     for action in actions(board):
-        v,a = minValue(result(board,action))
+        v,a = maxValue(result(board,action))
         if val > v:
             val = v
-            move = a
+            move = action
             if val == -1:
-                return move
+                return val,move
     return val,move
