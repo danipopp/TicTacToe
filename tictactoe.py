@@ -44,14 +44,23 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    
-    raise NotImplementedError
+    # define return set
+    available = set()
+
+    # check where are empty spaces
+    for i in range(0,3):
+        for j in range(0,3):
+            if board(i,j) == EMPTY:
+                available.add((i,j))
+
+    return available
 
 
 def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
+    
     raise NotImplementedError
 
 
