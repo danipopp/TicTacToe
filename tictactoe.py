@@ -125,4 +125,21 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
+    # if game over no need to calculate anything
+    if terminal(board):
+        return None
+    # if it's gamestart the board starts in the middle
+    if len(actions(board)) == 9:
+        return ((1,1))
+    
+
+    raise NotImplementedError
+
+
+def maxValue(board):
+    # TODO
+    raise NotImplementedError
+
+def minValue(board):
+    # TODO
     raise NotImplementedError
