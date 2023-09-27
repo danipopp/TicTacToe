@@ -132,14 +132,39 @@ def minimax(board):
     if len(actions(board)) == 9:
         return ((1,1))
     
+    if player(board) == X:
+        
 
     raise NotImplementedError
 
 
 def maxValue(board):
-    # TODO
-    raise NotImplementedError
+    if terminal(board):
+        return utility(board), None
+    
+    val = float('-inf')
+    move = None
+    for action in actions(board):
+        v,a = minValue(result(board,action))
+        if val < v:
+            val = v
+            move = a
+            if val == 1:
+                return move
+    return val,move
+
 
 def minValue(board):
-    # TODO
-    raise NotImplementedError
+    if terminal(board):
+        return utility(board), None
+    
+    val = float('inf')
+    move = None
+    for action in actions(board):
+        v,a = minValue(result(board,action))
+        if val > v:
+            val = v
+            move = a
+            if val == -1:
+                return move
+    return val,move
